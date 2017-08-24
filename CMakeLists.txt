@@ -45,8 +45,13 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(forward src/forward.cpp)
+add_executable(joy_nav src/joy_nav.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(forward
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(joy_nav
   ${catkin_LIBRARIES}
 )
