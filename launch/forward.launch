@@ -1,0 +1,7 @@
+<launch>
+
+    <include file="$(find l2bot)/launch/l2bot.launch" />
+
+    <node name="forward" pkg="l2bot_exapmles" type="forward" />
+
+</launch>
