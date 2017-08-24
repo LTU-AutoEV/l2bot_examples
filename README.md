@@ -1,44 +1,44 @@
 # l2bot_examples
 
-R
+Examples for use with LTU's L2Bot
+
+
 
 # Installation
 
-## Arduino
-
-Download and install the [Arduino IDE](https://www.arduino.cc/en/Main/Software). Load the 'ardunio/L2Bot_MC' sketch onto the L2Bot arduino.
 
 ## ROS
 
-If you haven't already, create a catkin workspace.
+
+### Install L2bot
+
+Make sure you have gone through the installation procedure for the L2Bot interface:
+
+
+  - Installation instructions: [https://github.com/LTU-AutoEV/l2bot](https://github.com/LTU-AutoEV/l2bot)
+
+
+### Install Examples
+
+Clone this repository into the `src` directory of `l2bot_ws` created during the L2Bot install.
 
 ```
-$ mkdir -p ~/ltumcs_autoev/src
-$ cd ~/ltumcs_autoev/src
+$ cd ~/l2bot_ws/src
+~/l2bot_ws/src$ git clone https://github.com/LTU-AutoEV/l2bot.git
 ```
 
-Clone this repository into the `src` directory.
-
-```
-~/ltumcs_autoev/src$ git clone https://github.com/LTU-AutoEV/l2bot.git
-```
+### Build
 
 Run `catkin_make` from the workspace directory.
 
 ```
-~/ltumcs_autoev/src$ cd ..
-~/ltumcs_autoev$ catkin_make
+~/l2bot_ws/src$ cd ..
+~/l2bot_ws$ catkin_make
 ```
 
 Install dependencies
 
 ```
-~/ltumcs_autoev$ rosdep install l2bot
+~/l2bot_ws$ sudo apt-get install ros-kinetic-joy ros-kinetic-joystick-drivers
+~/l2bot_ws$ rosdep install l2bot_examples
 ```
-
-
-# Topics
-
-## Published topics for internal use
-
-  - `std_msgs::UInt16` on **/L2Bot/mc**: Motor controller instruction for the l2bot
