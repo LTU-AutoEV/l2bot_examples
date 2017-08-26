@@ -2,9 +2,10 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
-
 // L2Bot Controller Topic
 #define TWIST_PUB "/rb_drive/rb_drive/twist_cmd"
+// Time to drive forward (in seconds)
+#define FWD_TIME 8.0
 
 int main(int argc, char** argv)
 {
@@ -21,8 +22,12 @@ int main(int argc, char** argv)
 
     // The twist message to publish
     geometry_msgs::Twist msg;
-    msg.linear.x = 0.7f;
+    msg.linear.x = 2.0f;
     msg.angular.z = 0.0f;
+
+    ros::Time begin = ros::Time::now();
+
+    ROS_INFO_STREAM("l2bot_example 'forward' publishing for " << FWD_TIME << " seconds!");
 
     // Publish loop
     while(ros::ok())
@@ -33,9 +38,23 @@ int main(int argc, char** argv)
         // Wait for ROS (time based on loop_rate above)
         ros::spinOnce();
         loop_rate.sleep();
+
+        // Get runtime duration
+        ros::Time end = ros::Time::now();
+        ros::Duration dur = end - begin;
+
+        // 5 seconds
+        if (dur.toSec() > FWD_TIME) {
+            // Publish stop command
+            msg.linear.x = 0.0f;
+            pub.publish(msg);
+
+            // Exit loop
+            break;
+        }
     }
 
-    ROS_INFO_STREAM("L2Bot go_fwd publishing!");
+    ROS_INFO_STREAM("l2bot: forward complete!");
     ros::spin();
 
     return 0;

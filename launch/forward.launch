@@ -4,6 +4,6 @@
     <include file="$(find l2bot)/launch/l2bot.launch" />
 
     <!-- launch forward example node -->
-    <node name="forward" pkg="l2bot_examples" type="forward" />
+    <node name="forward" pkg="l2bot_examples" type="forward" output="screen" />
 
 </launch>

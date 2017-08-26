@@ -36,9 +36,36 @@ Run `catkin_make` from the workspace directory.
 ~/l2bot_ws$ catkin_make
 ```
 
-Install dependencies
+### Install dependencies
 
 ```
 ~/l2bot_ws$ sudo apt-get install ros-kinetic-joy ros-kinetic-joystick-drivers
 ~/l2bot_ws$ rosdep install l2bot_examples
+```
+
+# Running the examples
+
+If you get the following error, remember to run `source devel/setup.bash` from the workspace directory.
+
+```
+[NODE.launch] is neither a launch file in package [l2bot_examples] nor is [l2bot_examples] a launch file name
+The traceback for the exception was written to the log file
+
+```
+
+### `forward`
+
+
+This example makes the l2bot drive forward for 8 seconds.
+
+```
+roslaunch l2bot_examples forward
+```
+
+### `joy_nav`
+
+This example allows the user to drive the l2bot with a joystick. This example is currently know to work with a basic Logitech controller.
+
+```
+roslaunch l2bot_examples joy_nav.launch
 ```
