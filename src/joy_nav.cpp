@@ -16,11 +16,9 @@
 /* Class JoyNav
  * Convert gamepad input to a geometry_msgs::Twist
  *
- * Publish:     Twist on "~/twist_cmd"
+ * Publish:     Twist on TWIST_PUB
  * Subscribe:   Joy on "/joy"
  */
-
-
 class JoyNav
 {
 public:
