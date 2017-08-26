@@ -10,8 +10,8 @@
 #define MULTIPLIER 3
 
 // Depends on controller
-#define LINEAR_AXIS 1
-#define ANGULAR_AXIS 2
+#define LINEAR_AXIS 2
+#define ANGULAR_AXIS 3
 
 /* Class JoyNav
  * Convert gamepad input to a geometry_msgs::Twist
@@ -65,7 +65,7 @@ void JoyNav::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
     // Create a vector
     geometry_msgs::Twist vec;
     vec.linear.x = MULTIPLIER * fb;
-    vec.angular.z = atan((MULTIPLIER / 10) * rl);
+    vec.angular.z = atan(rl);
 
     // Publish the vector
     twist_pub_.publish(vec);
