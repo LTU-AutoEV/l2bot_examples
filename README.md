@@ -24,7 +24,7 @@ Clone this repository into the `src` directory of `l2bot_ws` created during the 
 
 ```
 $ cd ~/l2bot_ws/src
-~/l2bot_ws/src$ git clone https://github.com/LTU-AutoEV/l2bot.git
+~/l2bot_ws/src$ git clone https://github.com/LTU-AutoEV/l2bot_examples.git
 ```
 
 ### Build
