@@ -34,6 +34,7 @@ Run `catkin_make` from the workspace directory.
 ```
 ~/l2bot_ws/src$ cd ..
 ~/l2bot_ws$ catkin_make
+~/l2bot_ws$ source devel/setup.sh
 ```
 
 ### Install dependencies
