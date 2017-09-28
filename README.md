@@ -60,7 +60,7 @@ The traceback for the exception was written to the log file
 This example makes the l2bot drive forward for 8 seconds.
 
 ```
-roslaunch l2bot_examples forward
+roslaunch l2bot_examples forward.launch
 ```
 
 ### `joy_nav`
