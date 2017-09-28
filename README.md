@@ -40,7 +40,7 @@ Run `catkin_make` from the workspace directory.
 
 ```
 ~/l2bot_ws$ sudo apt-get install ros-kinetic-joy ros-kinetic-joystick-drivers
-~/l2bot_ws$ rosdep install l2bot_examples
+~/l2bot_ws$ rosdep install --from-paths src --ignore-src -r -y
 ```
 
 # Running the examples
