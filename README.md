@@ -40,8 +40,8 @@ $ cd ~/l2bot_ws/src
 To use camera a camera with ROS, we must first install opencv.
 
 ```
-sudo apt-get install ros-kinetic-cv-bridge
-sudo apt-get install ros-kinetic-vision-opencv
+~/l2bot_ws$ sudo apt-get install ros-kinetic-cv-bridge
+~/l2bot_ws$ sudo apt-get install ros-kinetic-vision-opencv
 ```
 
 **rosdep**
@@ -88,3 +88,14 @@ This example allows the user to drive the l2bot with a joystick. This example is
 ```
 roslaunch l2bot_examples joy_nav.launch
 ```
+
+### `cam_pub` and `cam_edge_detect`
+
+This example demonstrates how to publish and subscribe to images in ROS.
+It also demonstrates simple OpenCV library usage.
+
+To change the input camera, you can change the `source` parameter in `claunch/camera.launch`.
+
+```
+roslaunch l2bot_examples camera.launch
+``````
