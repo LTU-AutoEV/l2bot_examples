@@ -11,6 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
   std_msgs
+
+  # For Camera Example
+  cv_bridge
+  image_transport
 )
 
 ###################################
@@ -46,12 +50,12 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(forward src/forward.cpp)
 add_executable(joy_nav src/joy_nav.cpp)
+add_executable(cam_pub src/cam_pub.cpp)
+add_executable(cam_edge_detect src/cam_edge_detect.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(forward
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(forward ${catkin_LIBRARIES})
+target_link_libraries(joy_nav ${catkin_LIBRARIES})
+target_link_libraries(cam_pub ${catkin_LIBRARIES})
+target_link_libraries(cam_edge_detect ${catkin_LIBRARIES})
 
-target_link_libraries(joy_nav
-  ${catkin_LIBRARIES}
-)
