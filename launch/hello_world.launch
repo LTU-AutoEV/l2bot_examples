@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- Publisher -->
+    <node name="hello_world_pub" pkg="l2bot_examples" type="hello_world_pub" output="screen" />
+
+    <!-- Subscriber -->
+    <node name="hello_world_sub" pkg="l2bot_examples" type="hello_world_sub" output="screen" />
+
+</launch>

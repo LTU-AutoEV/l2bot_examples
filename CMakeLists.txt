@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 1.8.3)
 project(l2bot_examples)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
@@ -51,11 +51,15 @@ include_directories(
 add_executable(forward src/forward.cpp)
 add_executable(joy_nav src/joy_nav.cpp)
 add_executable(cam_pub src/cam_pub.cpp)
+add_executable(hello_world_pub src/hello_world_pub.cpp)
+add_executable(hello_world_sub src/hello_world_sub.cpp)
 add_executable(cam_edge_detect src/cam_edge_detect.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(forward ${catkin_LIBRARIES})
 target_link_libraries(joy_nav ${catkin_LIBRARIES})
 target_link_libraries(cam_pub ${catkin_LIBRARIES})
+target_link_libraries(hello_world_pub ${catkin_LIBRARIES})
+target_link_libraries(hello_world_sub ${catkin_LIBRARIES})
 target_link_libraries(cam_edge_detect ${catkin_LIBRARIES})
 
