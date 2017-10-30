@@ -9,9 +9,6 @@
 #define TWIST_PUB "/rb_drive/rb_drive/twist_cmd"
 #define MULTIPLIER 3
 
-// Depends on controller
-#define LINEAR_AXIS 2
-#define ANGULAR_AXIS 3
 
 /* Class JoyNav
  * Convert gamepad input to a geometry_msgs::Twist
@@ -36,6 +33,9 @@ private:
     ros::Publisher twist_pub_;
     ros::Publisher state_pub_;
     ros::Subscriber joy_sub_;
+
+    int axes_linear_;
+    int axes_angular_;
 };
 
 
@@ -48,6 +48,17 @@ JoyNav::JoyNav() : nh_{"~"}
 
     // Publish control vectors
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(TWIST_PUB, 100);
+
+    // Load JS Mappings
+    if (!nh_.getParam("/joy_mappings/axes_linear", axes_linear_))
+    {
+        ROS_ERROR_STREAM("joy_nav: Could not load joystick configuration.");
+        ROS_ERROR_STREAM("joy_nav: Please run `roslaunch l2bot_examples joy_setup.launch`");
+        axes_linear_ = -1;
+        axes_angular_ = -1;
+    }
+
+    nh_.getParam("/joy_mappings/axes_angular", axes_angular_);
 }
 
 
@@ -57,8 +68,8 @@ void JoyNav::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
     // Get right-left and fwd-bkwd values
     // Values range from -1 to 1
-    float rl = joy->axes[ANGULAR_AXIS];
-    float fb = (1 - (joy->axes[LINEAR_AXIS]))/2.0f;
+    float rl = joy->axes[axes_angular_];
+    float fb = joy->axes[axes_linear_]; //(1 - (joy->axes[axes_linear_]))/2.0f;
 
     // Create a vector
     geometry_msgs::Twist vec;

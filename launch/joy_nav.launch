@@ -3,6 +3,9 @@
     <!-- Location of joystick -->
     <param name="joy_node/dev" type="string" value="/dev/input/js1" />
 
+    <!-- Joystick Mappings -->
+    <rosparam command="load" ns="joy_mappings" file="$(find l2bot_examples)/config/js_mappings.yaml" />
+
     <!-- launch joystick node -->
     <node name="joy_node" type="joy_node" pkg="joy" />
 

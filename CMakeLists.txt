@@ -50,6 +50,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(forward src/forward.cpp)
 add_executable(joy_nav src/joy_nav.cpp)
+add_executable(joy_setup src/joy_setup.cpp)
 add_executable(cam_pub src/cam_pub.cpp)
 add_executable(hello_world_pub src/hello_world_pub.cpp)
 add_executable(hello_world_sub src/hello_world_sub.cpp)
@@ -58,6 +59,7 @@ add_executable(cam_edge_detect src/cam_edge_detect.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(forward ${catkin_LIBRARIES})
 target_link_libraries(joy_nav ${catkin_LIBRARIES})
+target_link_libraries(joy_setup ${catkin_LIBRARIES})
 target_link_libraries(cam_pub ${catkin_LIBRARIES})
 target_link_libraries(hello_world_pub ${catkin_LIBRARIES})
 target_link_libraries(hello_world_sub ${catkin_LIBRARIES})
