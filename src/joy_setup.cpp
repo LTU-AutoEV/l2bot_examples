@@ -90,9 +90,9 @@ void JoySetup::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
             ss << axes[i] << " "; 
         }
         ss << "]";
-        ROS_INFO_STREAM("Initial axis state: " << ss.str());
+        ROS_INFO_STREAM("Initial axes state: " << ss.str());
 
-        ROS_INFO_STREAM("Current axis: " << getCurrentAxis());
+        ROS_INFO_STREAM("Current axes: " << getCurrentAxis());
     }
 }
 
@@ -109,7 +109,7 @@ int getHeldAxisFromUser(std::string name)
         ax = getCurrentAxis();
 
         if (ax == -1) {
-            ROS_INFO_STREAM("No input read. Please hold the axis you would like to use for " << name << ".");
+            ROS_INFO_STREAM("No input read. Please hold the axes you would like to use for " << name << ".");
             badcount++;
             if (badcount > 1) {
                 ROS_INFO_STREAM("Please make sure you are holding a joystick not a button.");
@@ -169,9 +169,9 @@ int main(int argc, char** argv)
     // The package path
     std::string package_path = ros::package::getPath("l2bot_examples");
     std::ofstream config;
-    config.open(package_path + "/config/js_axis.yaml");
-    config << "axis_fwdbkwd: " << ax_fwd << std::endl;
-    config << "axis_leftright: " << ax_left << std::endl;
+    config.open(package_path + "/config/js_mappings.yaml");
+    config << "axes_linear: " << ax_fwd << std::endl;
+    config << "axes_angular: " << ax_left << std::endl;
     config.close();
 
 
