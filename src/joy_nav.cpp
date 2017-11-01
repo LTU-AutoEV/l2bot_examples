@@ -73,7 +73,7 @@ void JoyNav::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
     // Create a vector
     geometry_msgs::Twist vec;
-    vec.linear.x = MULTIPLIER * fb;
+    vec.linear.x = MULTIPLIER * fb * -1;
     vec.angular.z = atan(rl);
 
     // Publish the vector

@@ -162,6 +162,8 @@ int main(int argc, char** argv)
 
     // Read axes
     int ax_fwd = getHeldAxisFromUser("FORWARD");
+    ROS_INFO_STREAM("Release FORWARD");
+    ros::Duration(2.0).sleep();
     int ax_left = getHeldAxisFromUser("RIGHT");
 
     // Write config file
