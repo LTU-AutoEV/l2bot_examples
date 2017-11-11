@@ -55,6 +55,7 @@ add_executable(cam_pub src/cam_pub.cpp)
 add_executable(hello_world_pub src/hello_world_pub.cpp)
 add_executable(hello_world_sub src/hello_world_sub.cpp)
 add_executable(cam_edge_detect src/cam_edge_detect.cpp)
+add_executable(stop_on_white src/stop_on_white.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(forward ${catkin_LIBRARIES})
@@ -64,4 +65,5 @@ target_link_libraries(cam_pub ${catkin_LIBRARIES})
 target_link_libraries(hello_world_pub ${catkin_LIBRARIES})
 target_link_libraries(hello_world_sub ${catkin_LIBRARIES})
 target_link_libraries(cam_edge_detect ${catkin_LIBRARIES})
+target_link_libraries(stop_on_white ${catkin_LIBRARIES})
 
