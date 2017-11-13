@@ -99,3 +99,15 @@ To change the input camera, you can change the `source` parameter in `claunch/ca
 ```
 roslaunch l2bot_examples camera.launch
 ``````
+
+### `stop_on_white`
+
+The L2Bot will drive forward until the camera detects a large white object.
+This example demonstrates how to control the l2bot based on camera input only.
+
+To change the input camera, you can change the `source` parameter in `claunch/camera.launch`.
+You may also need to change the threshold values in `src/stop_on_white.cpp` based on the 
+lighting conditions in the environment.
+```
+roslaunch l2bot_examples stop_on_white.launch
+``````

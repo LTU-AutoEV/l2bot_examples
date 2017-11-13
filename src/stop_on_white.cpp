@@ -10,27 +10,25 @@
 #define CAM_TOPIC "/camera_1/cam_pub/image_raw"
 #define TWIST_PUB "/rb_drive/rb_drive/twist_cmd"
 
-// The name of the preview window
-#define CVWIN_PREVIEW "cam_edge_detect preview"
-
+#define CVWIN_PREVIEW "threshold preview"
 
 /**
- * Simple Camera Subscriber
+ * Stop on White
  * =======================
  *
  * In this example we use a class to modularize the functionality
  *   of this node. We can include several member functions and
  *   variables which hide the functionality from main().
  */
-class SimpleCamSub
+class StopOnWhite
 {
 public:
-    SimpleCamSub();
-    ~SimpleCamSub();
+    StopOnWhite();
+    ~StopOnWhite();
     void imageCb(const sensor_msgs::ImageConstPtr& msg);
 
 private:
-    void countWhite(cv::Mat& src, cv::Mat& dst);
+    float countWhite(const cv::Mat& src, cv::Mat& dst);
 
     ros::NodeHandle nh_;
     image_transport::ImageTransport it_;
@@ -44,15 +42,18 @@ private:
  * ===========
  *
  * Do all initilization code here. This way, our main() function only
- *   needs to instantiate the SimpleCamSub object once and do nothing
+ *   needs to instantiate the StopOnWhite object once and do nothing
  *   else (see main() below).
  *
  * In this case, we only need to set up the image subscriber
  */
-SimpleCamSub::SimpleCamSub()
+StopOnWhite::StopOnWhite()
     :nh_{"~"}, it_{nh_}
 {
-    image_sub_ = it_.subscribe(CAM_TOPIC, 1, &SimpleCamSub::imageCb, this);
+    // Subscribe to the camera publisher node
+    image_sub_ = it_.subscribe(CAM_TOPIC, 1, &StopOnWhite::imageCb, this);
+
+    // Publish on the l2bot twist command topic
     pub_ = nh_.advertise<geometry_msgs::Twist>(TWIST_PUB, 10);
 }
 
@@ -64,7 +65,7 @@ SimpleCamSub::SimpleCamSub()
  *
  * Destroy CV windows
  */
-SimpleCamSub::~SimpleCamSub()
+StopOnWhite::~StopOnWhite()
 {
     cv::destroyWindow(CVWIN_PREVIEW);
 }
@@ -77,10 +78,9 @@ SimpleCamSub::~SimpleCamSub()
  *
  * Called once every time a image is published on the topic this
  *   node is subscribed to. The image is passed to the function as
- *   a ImageConstPtr. A few lines of code validate the image and
- *   convert it into a cv::Mat
+ *   a ImageConstPtr
  */
-void SimpleCamSub::imageCb(const sensor_msgs::ImageConstPtr& msg)
+void StopOnWhite::imageCb(const sensor_msgs::ImageConstPtr& msg)
 {
     //Convert to cv image
     cv_bridge::CvImagePtr cv_ptr;
@@ -94,27 +94,27 @@ void SimpleCamSub::imageCb(const sensor_msgs::ImageConstPtr& msg)
         return;
     }
 
-    // Run edge detection function
-    cv Mat::preview;
-    float white_visible = countWhite(cv_ptr->image);
+    // Apply a threshold and count the number of white pixels
+    cv::Mat preview;
+    float white_visible = countWhite(cv_ptr->image, preview);
 
     // Uncomment to print pixel ratio to terminal
     ROS_INFO_STREAM("white/all pixel ratio: " << white_visible);
 
     // If the number of white pixels is above a certain percent, stop
-    geometry_msgs::Twist msg;
-    if (white_visible > 0.50) 
+    geometry_msgs::Twist twist;
+    if (white_visible > 0.50)
     {
-        msg.linear.x = 0.0;
+        twist.linear.x = 0.0;
     }
     else
     {
-        msg.linear.x = 2.0;
+        twist.linear.x = 2.0;
     }
-    pub_.publish(msg);
+    pub_.publish(twist);
 
     // Show preview window
-    cv::imshow("Threshold Preview", preview);
+    cv::imshow(CVWIN_PREVIEW, preview);
 
     // Update GUI Window
     cv::waitKey(3);
@@ -130,25 +130,29 @@ void SimpleCamSub::imageCb(const sensor_msgs::ImageConstPtr& msg)
  *
  * https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html?highlight=threshold
  */
-float SimpleCamSub::countWhite(const cv::Mat& src, cv::Mat& preview)
+float StopOnWhite::countWhite(const cv::Mat& src, cv::Mat& preview)
 {
     // Convert the source to grayscale
     cv::Mat src_gray;
     cv::cvtColor(src, src_gray, CV_BGR2GRAY);
 
-    // Binary threshold
-    double max_value = 255.0;
-    int block_size = 3;
+    // Blur the image to reduce noise
+    cv::medianBlur(src_gray, src_gray, 11);
 
-    cv::adaptiveThreshold(src_gray, preview,
-            max_value,
-            ADAPTIVE_THRESH_GAUSSIAN_C
-            CV_THRESH_BINARY,
-            block_size);
+    // Threshold parameters
+    int const threshold_type = cv::THRESH_OTSU;
+    int const threshold_value = 3;
+    int const max_value = 255;
+    int const max_type = 4;
+    int const max_BINARY_value = 255;
 
+    cv::threshold(src_gray, preview, threshold_value, max_BINARY_value, threshold_type);
+
+    // The number of white pixels
     int white_count = cv::countNonZero(preview);
 
-    return (float)white_count / (float)(src.rows * src.cols)
+    // Function return ratio #white / #total
+    return (float)white_count / (float)(src.rows * src.cols);
 }
 
 
@@ -156,14 +160,14 @@ float SimpleCamSub::countWhite(const cv::Mat& src, cv::Mat& preview)
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "cam_edge_detect");
+    ros::init(argc, argv, "stop_on_white");
 
-    // Create a SimpleCamSub object.
+    // Create a StopOnWhite object.
     // Since initilization code is in the constructor, we do
     //   not need to do anythong else with this object
-    SimpleCamSub sd{};
+    StopOnWhite sd{};
 
-    ROS_INFO_STREAM("cam_edge_detect running!");
+    ROS_INFO_STREAM("stop_on_white running!");
     ros::spin();
     return 0;
 }
