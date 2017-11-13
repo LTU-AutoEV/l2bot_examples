@@ -1,0 +1,32 @@
+<launch>
+
+    <!-- ********** Camera Publisher ********* -->
+
+    <!-- ns: Name of Camera -->
+    <group ns="camera_1">
+
+        <!-- ******* Camera Parameters ****** -->
+
+        <!-- The camera input -->
+        <!-- Examples:
+            Default camera:   "/dev/video0"
+            Specific camera:  "/dev/v4l/by-id/<CAMERA_NAME>"
+        -->
+        <param name="~source" type="string" value="/dev/video0" />
+
+        <!-- Flip the image horizontally -->
+        <param name="~hflip" type="bool" value="false" />
+
+        <!-- Show the output image in a cv window -->
+        <param name="~show_output" type="bool" value="true" />
+
+        <!-- ******* Launch the cam_pub node ********* -->
+        <node name="cam_pub" pkg="l2bot_examples" type="cam_pub" output="screen" respawn="true" respawn_delay="10"/>
+    </group>
+
+
+
+    <!-- ********** Camera Subscriber ********* -->
+    <node name="stop_on_white" pkg="l2bot_examples" type="stop_on_white" output="screen" />
+
+</launch>
