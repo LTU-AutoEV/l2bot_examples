@@ -1,5 +1,8 @@
 <launch>
 
+    <!-- ********** L2Bot ********* -->
+    <include file="$(find l2bot)/launch/l2bot.launch" />
+
     <!-- ********** Camera Publisher ********* -->
 
     <!-- ns: Name of Camera -->
