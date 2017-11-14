@@ -72,7 +72,7 @@ The traceback for the exception was written to the log file
 
 ```
 
-### `forward`
+### `forward`: Sending commands to the L2Bot
 
 
 This example makes the l2bot drive forward for 8 seconds.
@@ -81,7 +81,7 @@ This example makes the l2bot drive forward for 8 seconds.
 roslaunch l2bot_examples forward.launch
 ```
 
-### `joy_nav`
+### `joy_nav`: Converting hardware input messages into L2Bot controls
 
 This example allows the user to drive the l2bot with a joystick. This example is currently know to work with a basic Logitech controller.
 
@@ -89,7 +89,7 @@ This example allows the user to drive the l2bot with a joystick. This example is
 roslaunch l2bot_examples joy_nav.launch
 ```
 
-### `cam_pub` and `cam_edge_detect`
+### `cam_pub` and `cam_edge_detect`: Camera publisher, camera subscriber, and OpenCV
 
 This example demonstrates how to publish and subscribe to images in ROS.
 It also demonstrates simple OpenCV library usage.
@@ -100,10 +100,12 @@ To change the input camera, you can change the `source` parameter in `claunch/ca
 roslaunch l2bot_examples camera.launch
 ``````
 
-### `stop_on_white`
+### `stop_on_white`: Controlling the L2Bot with camera input & *dynamic_reconfigure*.
 
 The L2Bot will drive forward until the camera detects a large white object.
-This example demonstrates how to control the l2bot based on camera input only.
+This example demonstrates how to control the L2bot based on camera input only.
+This example also demonstrates how to use `dynamic_reconfigure` to adjust parameters
+while ROS nodes are running.
 
 To change the input camera, you can change the `source` parameter in `claunch/camera.launch`.
 You may also need to change the threshold values in `src/stop_on_white.cpp` based on the 
