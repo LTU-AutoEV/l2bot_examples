@@ -1,5 +1,8 @@
 <launch>
 
+    <!-- ********** L2Bot ********* -->
+    <include file="$(find l2bot)/launch/l2bot.launch" />
+
     <!-- ********** Camera Publisher ********* -->
 
     <!-- ns: Name of Camera -->
@@ -29,4 +32,6 @@
     <!-- ********** Camera Subscriber ********* -->
     <node name="stop_on_white" pkg="l2bot_examples" type="stop_on_white" output="screen" />
 
+    <!-- ********** Dynamic Reconfigure **********-->
+    <node name="rqt" pkg="rqt_gui" type="rqt_gui" args="--perspective-file $(find l2bot_examples)/rqt.perspective" />
 </launch>

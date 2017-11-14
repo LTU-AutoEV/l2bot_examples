@@ -15,6 +15,14 @@ find_package(catkin REQUIRED COMPONENTS
   # For Camera Example
   cv_bridge
   image_transport
+
+  # For dynamic reconfigure examples
+  dynamic_reconfigure
+)
+
+# For dynamic_reconfigure
+generate_dynamic_reconfigure_options(
+    cfg/StopOnWhite.cfg
 )
 
 ###################################
@@ -56,6 +64,9 @@ add_executable(hello_world_pub src/hello_world_pub.cpp)
 add_executable(hello_world_sub src/hello_world_sub.cpp)
 add_executable(cam_edge_detect src/cam_edge_detect.cpp)
 add_executable(stop_on_white src/stop_on_white.cpp)
+
+# deps for dynamic_reconfigure
+add_dependencies(stop_on_white ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(forward ${catkin_LIBRARIES})
