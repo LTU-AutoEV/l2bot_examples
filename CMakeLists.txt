@@ -20,6 +20,8 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
 )
 
+find_package(OpenCV REQUIRED)
+
 # For dynamic_reconfigure
 generate_dynamic_reconfigure_options(
     cfg/StopOnWhite.cfg
@@ -50,6 +52,7 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 
@@ -72,9 +75,9 @@ add_dependencies(stop_on_white ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED
 target_link_libraries(forward ${catkin_LIBRARIES})
 target_link_libraries(joy_nav ${catkin_LIBRARIES})
 target_link_libraries(joy_setup ${catkin_LIBRARIES})
-target_link_libraries(cam_pub ${catkin_LIBRARIES})
+target_link_libraries(cam_pub ${catkin_LIBRARIES} ${OpenCV_LIBS})
 target_link_libraries(hello_world_pub ${catkin_LIBRARIES})
 target_link_libraries(hello_world_sub ${catkin_LIBRARIES})
-target_link_libraries(cam_edge_detect ${catkin_LIBRARIES})
-target_link_libraries(stop_on_white ${catkin_LIBRARIES})
+target_link_libraries(cam_edge_detect ${catkin_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(stop_on_white ${catkin_LIBRARIES} ${OpenCV_LIBS})
 
