@@ -46,8 +46,6 @@ JoyNav::JoyNav() : nh_{"~"}
     // Subscribe to the controller
     joy_sub_ = nh_.subscribe<sensor_msgs::Joy>(JOY_SUB, 10, &JoyNav::joyCallback, this);
 
-    // Publish control vectors
-    twist_pub_ = nh_.advertise<geometry_msgs::Twist>(TWIST_PUB, 100);
 
     // Load JS Mappings
     if (!nh_.getParam("/joy_mappings/axes_linear", axes_linear_))
@@ -57,8 +55,19 @@ JoyNav::JoyNav() : nh_{"~"}
         axes_linear_ = -1;
         axes_angular_ = -1;
     }
-
     nh_.getParam("/joy_mappings/axes_angular", axes_angular_);
+
+
+    std::string twist_pub;
+    // Load Topic
+    if (!nh_.getParam("/topics/twist_cmd", twist_pub))
+    {
+        ROS_ERROR_STREAM("joy_nav: Could not load topic to publish on");
+    }
+
+    // Publish control vectors
+    twist_pub_ = nh_.advertise<geometry_msgs::Twist>(twist_pub, 100);
+
 }
 
 

@@ -1,7 +1,8 @@
 <launch>
-
+    <!-- Topics to use -->
+    <rosparam command="load" ns="topics" file="$(find l2bot_examples)/config/topics.yaml" />
     <!-- Location of joystick -->
-    <param name="joy_node/dev" type="string" value="/dev/input/js1" />
+    <param name="joy_node/dev" type="string" value="/dev/input/js0" />
 
     <!-- Joystick Mappings -->
     <rosparam command="load" ns="joy_mappings" file="$(find l2bot_examples)/config/js_mappings.yaml" />
@@ -10,7 +11,7 @@
     <node name="joy_node" type="joy_node" pkg="joy" />
 
     <!-- launch l2bot interface -->
-    <include file="$(find l2bot)/launch/l2bot.launch" />
+    <!--<include file="$(find l2bot)/launch/l2bot.launch" />-->
 
     <!-- launch joy_nav example -->
     <node name="joy_nav" pkg="l2bot_examples" type="joy_nav" />

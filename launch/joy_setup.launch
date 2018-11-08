@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Location of joystick -->
-    <param name="joy_node/dev" type="string" value="/dev/input/js1" />
+    <param name="joy_node/dev" type="string" value="/dev/input/js0" />
 
     <!-- launch joystick node -->
     <node name="joy_node" type="joy_node" pkg="joy" />
